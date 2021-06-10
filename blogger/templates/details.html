@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<head>
+    <h1>Blogger App</h1>
+</head>
+<body>
+    <h1>Details of the Post</h2>
+   {% block content %}
+        {% if messages %} 
+            {% for message in messages %}
+                 <div class='alert alert-info alert-dismissible' role="alert">
+                  <button class="close" data-dismiss="alert">
+                        <small><sup>x</sup></small>
+                </button>
+               {{message}}
+                </div>
+                    
+            {% endfor %}
+        {% endif %}
+    <div class="container">
+    <ul>
+           <li><h1>{{post.title}}</h1></li><br/>
+           <li><h2>{{post.name}}</h2></li><br/>
+           <li>{{post.post}}</li><br/>
+           <br>
+    </ul>
+    <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
+    </div>
+   {% endblock %}
+</body>
+</html>

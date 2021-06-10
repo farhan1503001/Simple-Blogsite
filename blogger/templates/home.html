@@ -1,8 +1,19 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <head>
     <h1>Blogger App</h1>
 </head>
 <body>
     <h2>Blog App</h2>
+    {% block content %}
+    <ul>
+        {% for post in object_list %}
+           <li><a href="{% url 'details' post.pk %}">{{post.title}}</a></li><br/>
+           <li>{{post.name}}</li><br/>
+           <li>{{post.post}}</li><br/>
+           <br>
+        {% endfor %}
+    {% endblock %}
+    </ul>
 </body>
 </html>
