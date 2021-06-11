@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<head>
+    <h1>Blogger App</h1>
+</head>
+<body>
+  {% block content %}
+    <h1>Editing Post</h2>
+    <div class="container">
+       <form method="POST">
+           {% csrf_token %} 
+           <h3>{{post.title}}</h3><br/>
+           <strong>Are you sure you want to delete this post!</strong>
+           <button class="btn btn-info" type="submit">Delete Post!</button>
+    </div>
+   {% endblock %}
+</body>
+</html>

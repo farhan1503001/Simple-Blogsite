@@ -21,8 +21,17 @@
     <ul>
            <li><h1>{{post.title}}</h1></li><br/>
            <li><h2>{{post.name}}</h2></li><br/>
-           <li>{{post.post}}</li><br/>
-           <br>
+           <li><h4>{{post.post}}</h4></li><br/>
+           <br/>
+            <form action="{% url 'edit' post.pk %}">
+                <input class="btn btn-success" type="submit" value="Edit" />
+              </form>
+              <br/>
+            <form action="{% url 'delete' post.pk %}">
+                <input class="btn btn-warning" type="submit" value="Delete" />
+            </form>
+           <hr>
+
     </ul>
     <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
     </div>

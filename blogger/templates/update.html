@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<head>
+    <h1>Blogger App</h1>
+</head>
+<body>
+  {% block content %}
+    <h1>Editing Post</h2>
+    <div class="container">
+       <form method="POST">
+           {% csrf_token %} 
+           {{form.as_p}}
+           <button class="btn btn-info" type="submit">Confirm Edit</button>
+    </div>
+   {% endblock %}
+</body>
+</html>

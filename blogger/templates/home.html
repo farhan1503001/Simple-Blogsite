@@ -6,14 +6,26 @@
 <body>
     <h2>Blog App</h2>
     {% block content %}
-    <ul>
-        {% for post in object_list %}
-           <li><a href="{% url 'details' post.pk %}">{{post.title}}</a></li><br/>
-           <li>{{post.name}}</li><br/>
-           <li>{{post.post}}</li><br/>
-           <br>
-        {% endfor %}
+    <div class="container">
+        <ul>
+            {% for post in object_list %}
+               <li><a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a></li><br/>
+               <li><h3>{{post.name}}</h3></li><br/>
+               <li>{{post.post}}</li><br/>
+               <form action="{% url 'edit' post.pk %}">
+                <input class="btn btn-success" type="submit" value="Edit" />
+              </form>
+              <br/>
+              <form action="{% url 'delete' post.pk %}">
+                <input class="btn btn-warning" type="submit" value="Delete" />
+              </form>
+              <hr>
+              <br/>
+            {% endfor %}
+        </ul>
+    </div>
+    
     {% endblock %}
-    </ul>
+   
 </body>
 </html>
