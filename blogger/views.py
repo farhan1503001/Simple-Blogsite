@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 class Postlist(ListView):
     model=Post
     template_name='home.html'
+    ordering=['post_date']
 #Now we will see the details views
 class Postdetail(DetailView):
     model=Post 
