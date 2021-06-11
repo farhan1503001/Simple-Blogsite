@@ -12,13 +12,16 @@
                <li><a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a></li><br/>
                <li><h3>{{post.name}}  {{post.post_date}}</h3></li><br/>
                <li>{{post.post}}</li><br/>
-               <form action="{% url 'edit' post.pk %}">
-                <input class="btn btn-success" type="submit" value="Edit" />
-              </form>
-              <br/>
-              <form action="{% url 'delete' post.pk %}">
-                <input class="btn btn-warning" type="submit" value="Delete" />
-              </form>
+               {% if user.is_authenticated %}
+                <form action="{% url 'edit' post.pk %}">
+                  <input class="btn btn-success" type="submit" value="Edit" />
+                </form>
+                <br/>
+                <form action="{% url 'delete' post.pk %}">
+                  <input class="btn btn-warning" type="submit" value="Delete" />
+                </form>
+              {% else %}
+              {% endif %}
               <hr>
               <br/>
             {% endfor %}
