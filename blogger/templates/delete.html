@@ -5,6 +5,7 @@
 </head>
 <body>
   {% block content %}
+  {% if user.is_authenticated %}
     <h1>Editing Post</h2>
     <div class="container">
        <form method="POST">
@@ -13,6 +14,9 @@
            <strong>Are you sure you want to delete this post!</strong>
            <button class="btn btn-info" type="submit">Delete Post!</button>
     </div>
+  {% else %} 
+   <p>You're not allowed here and you know that for sure</p>
+  {% endif %}
    {% endblock %}
 </body>
 </html>

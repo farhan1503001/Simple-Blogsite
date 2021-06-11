@@ -4,37 +4,41 @@
     <h1>Blogger App</h1>
 </head>
 <body>
-    <h1>Details of the Post</h2>
-   {% block content %}
-        {% if messages %} 
-            {% for message in messages %}
-                 <div class='alert alert-info alert-dismissible' role="alert">
-                  <button class="close" data-dismiss="alert">
-                        <small><sup>x</sup></small>
-                </button>
-               {{message}}
-                </div>
-                    
-            {% endfor %}
-        {% endif %}
-    <div class="container">
-    <ul>
-           <li><h1>{{post.title}}</h1></li><br/>
-           <li><h2>{{post.name}}</h2></li><br/>
-           <li><h4>{{post.post}}</h4></li><br/>
-           <br/>
-            <form action="{% url 'edit' post.pk %}">
-                <input class="btn btn-success" type="submit" value="Edit" />
-              </form>
-              <br/>
-            <form action="{% url 'delete' post.pk %}">
-                <input class="btn btn-warning" type="submit" value="Delete" />
-            </form>
-           <hr>
+    {% block content %}
+            <h1>Details of the Post</h2>
+        
+                {% if messages %} 
+                    {% for message in messages %}
+                        <div class='alert alert-info alert-dismissible' role="alert">
+                        <button class="close" data-dismiss="alert">
+                                <small><sup>x</sup></small>
+                        </button>
+                        {{message}}
+                        </div>
+                            
+                    {% endfor %}
+                {% endif %}
+            <div class="container">
+            <ul>
+                <li><h1>{{post.title}}</h1></li><br/>
+                <li><h2>{{post.name}}</h2></li><br/>
+                <li><h4>{{post.post}}</h4></li><br/>
+                <br/>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'edit' post.pk %}">
+                        <input class="btn btn-success" type="submit" value="Edit" />
+                    </form>
+                    <br/>
+                    <form action="{% url 'delete' post.pk %}">
+                        <input class="btn btn-warning" type="submit" value="Delete" />
+                    </form>
+                <hr>
+                {% else %} 
+                {% endif %}
 
-    </ul>
-    <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
-    </div>
+            </ul>
+            <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
+            </div>
    {% endblock %}
 </body>
 </html>

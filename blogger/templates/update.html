@@ -5,6 +5,7 @@
 </head>
 <body>
   {% block content %}
+  {% if user.is_authenticated %}
     <h1>Editing Post</h2>
     <div class="container">
        <form method="POST">
@@ -12,6 +13,9 @@
            {{form.as_p}}
            <button class="btn btn-info" type="submit">Confirm Edit</button>
     </div>
+  {% else %} 
+    <p>You're not allowed here get the fuck off</p>
+  {% endif %}
    {% endblock %}
 </body>
 </html>
