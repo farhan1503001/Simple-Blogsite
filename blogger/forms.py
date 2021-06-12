@@ -9,9 +9,10 @@ class PostForm(forms.ModelForm):
 
         widgets={
             'title':forms.TextInput(attrs={'class':'form-control'}),
-            'name':forms.Select(attrs={'class':'form-control'}),
+            'name':forms.TextInput(attrs={'class':'form-control','id':'name','value':'','type':'hidden'}),
             'post': forms.Textarea(attrs={'class':'form-control'})
         }
+
 class EditForm(forms.ModelForm):
     class Meta:
         model=Post

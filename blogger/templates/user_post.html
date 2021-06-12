@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<head>
+    <h1>Blogger App</h1>
+</head>
+<body>
+    <h2>Blog App</h2>
+    {% block content %}
+    {% if user.is_authenticated %}
+        <p>User Id: {{user.id}}</p>
+        <br/>
+        <div class="container">
+            <ul>
+                {% for post in object_list %}
+                <li><a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a></li><br/>
+                <li><h3>{{post.name}}  {{post.post_date}}</h3></li><br/>
+                <li>{{post.post|slice:":200"}}</li><br/>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'edit' post.pk %}">
+                    <input class="btn btn-success" type="submit" value="Edit" />
+                    </form>
+                    <br/>
+                    <form action="{% url 'delete' post.pk %}">
+                    <input class="btn btn-warning" type="submit" value="Delete" />
+                    </form>
+                {% else %}
+                {% endif %}
+                <hr>
+                <br/>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %} 
+           <p>Please Login To Access</p>
+        {% endif %}
+    {% endblock %}
+   
+</body>
+</html>

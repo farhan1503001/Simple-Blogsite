@@ -5,6 +5,7 @@
 </head>
 <body>
     {% block content %}
+    <div class="container">
             <h1>Details of the Post</h2>
         
                 {% if messages %} 
@@ -18,13 +19,14 @@
                             
                     {% endfor %}
                 {% endif %}
-            <div class="container">
+            
             <ul>
                 <li><h1>{{post.title}}</h1></li><br/>
                 <li><h2>{{post.name}}</h2></li><br/>
                 <li><h4>{{post.post}}</h4></li><br/>
                 <br/>
                 {% if user.is_authenticated %}
+                  {% if user.id == post.name.id %}
                     <form action="{% url 'edit' post.pk %}">
                         <input class="btn btn-success" type="submit" value="Edit" />
                     </form>
@@ -33,12 +35,14 @@
                         <input class="btn btn-warning" type="submit" value="Delete" />
                     </form>
                 <hr>
+                   {%endif%}
+                  
                 {% else %} 
                 {% endif %}
 
             </ul>
             <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
-            </div>
+         </div>
    {% endblock %}
 </body>
 </html>

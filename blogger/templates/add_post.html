@@ -7,14 +7,20 @@
 <body>
     {% block content %} 
     <br/>
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button class="btn btn-secondary">Submit</button>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-secondary">Submit</button>
 
-    </div>
-    
+        </div>
+        <!---Now writing javascript code to automaticall select user and make select unchangable-->
+        <script>
+            var d_value="{{user.id}}";
+            document.getElementById('name').value=d_value;
+        </script>
+    {% endif %}
     {% endblock %}
 </body>
 </htm>

@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 class Postlist(ListView):
     model=Post
     template_name='home.html'
-    ordering=['post_date'
+    ordering=['-post_date'
     ]
 #Now we will see the details views
 class Postdetail(DetailView):
@@ -38,3 +38,10 @@ class DeletePost(DeleteView):
     model=Post
     template_name='delete.html'
     success_url=reverse_lazy('home')
+class UserPost(ListView):
+    model=Post
+    template_name='user_post.html'
+
+    def get_queryset(self):
+       query_set=Post.objects.filter(name=self.request.user)
+       return query_set

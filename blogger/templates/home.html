@@ -6,21 +6,25 @@
 <body>
     <h2>Blog App</h2>
     {% block content %}
+    <br/>
     <div class="container">
         <ul>
             {% for post in object_list %}
                <li><a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a></li><br/>
                <li><h3>{{post.name}}  {{post.post_date}}</h3></li><br/>
-               <li>{{post.post}}</li><br/>
+               <li>{{post.post|slice:":200"}}</li><br/>
                {% if user.is_authenticated %}
-                <form action="{% url 'edit' post.pk %}">
-                  <input class="btn btn-success" type="submit" value="Edit" />
-                </form>
-                <br/>
-                <form action="{% url 'delete' post.pk %}">
-                  <input class="btn btn-warning" type="submit" value="Delete" />
-                </form>
-              {% else %}
+                 {% if user.id == post.name.id %}
+                  <form action="{% url 'edit' post.pk %}">
+                    <input class="btn btn-success" type="submit" value="Edit" />
+                  </form>
+                  <br/>
+                  <form action="{% url 'delete' post.pk %}">
+                    <input class="btn btn-warning" type="submit" value="Delete" />
+                  </form>
+                  {% else %}
+                  {% endif %}
+               {% else %}
               {% endif %}
               <hr>
               <br/>
