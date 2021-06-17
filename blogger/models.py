@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Count
 from django.urls import reverse
 from datetime import time,date,datetime
 # Create your models here.
@@ -18,7 +19,11 @@ class Post(models.Model):
     post=models.TextField()
     #likes=models.ManyToManyFied(User,related_name='blog_post')
     category=models.CharField(max_length=250,default='coding')
+    likes=models.ManyToManyField(User,related_name='blog_likes') #Adding new like fields
     post_date=models.DateTimeField(auto_now_add=True)#Will automatically add date and time field
+
+    def get_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title+'||'+str(self.name)

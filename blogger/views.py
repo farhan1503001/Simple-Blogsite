@@ -12,6 +12,14 @@ from .forms import AddCateogory, PostForm,EditForm
 from django.urls import reverse_lazy
 # Create your views here.
 #Now we will not use function views but class based template views
+def likeview(request,pk):
+    post=get_object_or_404(Post,id=request.POST.get('post_id'))
+    #Now checking if the user previously liked this post or not
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('details',args=[str(pk)]))
 class Postlist(ListView):
     model=Post
     template_name='home.html'
@@ -21,11 +29,25 @@ class Postlist(ListView):
         cat_menu=Category.objects.all()
         context=super(Postlist,self).get_context_data()
         context['cat_menu']=cat_menu
+        
         return context
 #Now we will see the details views
 class Postdetail(DetailView):
     model=Post 
     template_name='details.html'
+    def get_context_data(self,*args,**kwargs):
+        cat_menu=Category.objects.all()
+        context=super(Postdetail,self).get_context_data()
+        post=get_object_or_404(Post,id=self.kwargs['pk'])
+        total_likes=post.get_likes()
+        #checking if the user previously liked it or not
+        liked=False
+        if post.likes.filter(id=self.request.user.id).exists():
+            liked=True
+        context['total_likes']=total_likes
+        context['cat_menu']=cat_menu
+        context['liked']=liked
+        return context
 #Showing category details
 def category_detail(request,cats):
     cat_data=Post.objects.filter(category=cats)
