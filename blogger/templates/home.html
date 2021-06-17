@@ -10,8 +10,8 @@
     <div class="container">
         <ul>
             {% for post in object_list %}
-               <li><a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a></li><br/>
-               <li><h3>{{post.name}}  {{post.post_date}}</h3></li><br/>
+               <a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a><br/>
+               <li><h3>{{post.name}} <a href="{% url 'cat_details' post.category|slugify %}">{{post.category}}</a> {{post.post_date}}</h3></li><br/>
                <li>{{post.post|slice:":200"}}</li><br/>
                {% if user.is_authenticated %}
                  {% if user.id == post.name.id %}
@@ -31,7 +31,6 @@
             {% endfor %}
         </ul>
     </div>
-    
     {% endblock %}
    
 </body>
