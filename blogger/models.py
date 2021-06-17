@@ -7,6 +7,7 @@ class Post(models.Model):
     title=models.CharField(max_length=200)
     name=models.ForeignKey(User,on_delete=models.CASCADE)
     post=models.TextField()
+    likes=models.ManyToManyField(User,related_name='blog_post')
     post_date=models.DateTimeField(auto_now_add=True)#Will automatically add date and time field
 
     def __str__(self):

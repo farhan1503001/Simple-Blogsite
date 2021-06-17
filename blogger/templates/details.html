@@ -35,8 +35,12 @@
                         <input class="btn btn-warning" type="submit" value="Delete" />
                     </form>
                 <hr>
+                
                    {%endif%}
-                  
+                <form action="{% url 'like' post.pk %}" method="POST">
+                    {% csrf_token %}
+                 <button class='btn btn-primary' type="submit" value="{{post.id}}" name='post_liker'>Like!</button>
+                </form>
                 {% else %} 
                 {% endif %}
 

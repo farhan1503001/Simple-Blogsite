@@ -1,7 +1,10 @@
+from django.http import request
+from django.http.response import HttpResponseRedirect
+from django.urls.base import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
 from blogger.models import Post
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView,DetailView,CreateView,UpdateView
 from .models import Post
 from django.contrib.messages.views import SuccessMessageMixin
@@ -9,15 +12,18 @@ from .forms import PostForm,EditForm
 from django.urls import reverse_lazy
 # Create your views here.
 #Now we will not use function views but class based template views
+def likeview(request,pk):
+    post=get_object_or_404(Post,id=pk)
+    return HttpResponseRedirect(reverse('details',args=[str(pk)]))
 class Postlist(ListView):
     model=Post
     template_name='home.html'
-    ordering=['-post_date'
-    ]
+    ordering=['-post_date']
 #Now we will see the details views
 class Postdetail(DetailView):
     model=Post 
     template_name='details.html'
+
 #Now we will add post
 class Addpost(SuccessMessageMixin,CreateView):
     model=Post
