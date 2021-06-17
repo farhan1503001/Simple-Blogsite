@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.aggregates import Count
 from django.urls import reverse
 from datetime import time,date,datetime
+from ckeditor.fields import RichTextField
 # Create your models here.
 #Addition of field category
 class Category(models.Model):
@@ -16,7 +17,7 @@ class Category(models.Model):
 class Post(models.Model):
     title=models.CharField(max_length=200)
     name=models.ForeignKey(User,on_delete=models.CASCADE)
-    post=models.TextField()
+    post=RichTextField(blank=True,null=True)
     #likes=models.ManyToManyFied(User,related_name='blog_post')
     category=models.CharField(max_length=250,default='coding')
     likes=models.ManyToManyField(User,related_name='blog_likes') #Adding new like fields
