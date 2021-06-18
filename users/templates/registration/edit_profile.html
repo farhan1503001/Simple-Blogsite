@@ -6,7 +6,7 @@
 <body>
   {% block content %}
   {% if user.is_authenticated %}
-    <h1>Editing Post</h2>
+    <h1>Editing User Profile</h2>
     <div class="container">
        <form method="POST">
            {% csrf_token %} 
