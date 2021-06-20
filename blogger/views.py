@@ -3,12 +3,12 @@ from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
-from blogger.models import Post
+from blogger.models import Post,comment
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView,DetailView,CreateView,UpdateView
-from .models import Category, Post
+from .models import Category, Post, comment
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import AddCateogory, PostForm,EditForm
+from .forms import AddCateogory, AddcommentForm, PostForm,EditForm
 from django.urls import reverse_lazy
 # Create your views here.
 #Now we will not use function views but class based template views
@@ -20,6 +20,12 @@ def likeview(request,pk):
     else:
         post.likes.add(request.user)
     return HttpResponseRedirect(reverse('details',args=[str(pk)]))
+
+def delete_comment_view(request,pk,bk):
+    item=comment.objects.filter(id=pk)
+    item.delete()
+    return HttpResponseRedirect(reverse('details',args=[str(bk)]))
+
 class Postlist(ListView):
     model=Post
     template_name='home.html'
@@ -60,6 +66,16 @@ class Addpost(SuccessMessageMixin,CreateView):
     #For stylizing forms we use form
     form_class=PostForm
     success_message='Post Created Successfully!'
+
+class Addcomment(CreateView):
+    model=comment
+    template_name='add_comment.html'
+    form_class=AddcommentForm
+    #Adding post link
+    def form_valid(self,form):
+        form.instance.post_id=self.kwargs['pk']
+        return super().form_valid(form)
+
 #Here we will add new categories
 class AddCategories(CreateView):
     model=Category
@@ -84,3 +100,4 @@ class UserPost(ListView):
     def get_queryset(self):
        query_set=Post.objects.filter(name=self.request.user)
        return query_set
+

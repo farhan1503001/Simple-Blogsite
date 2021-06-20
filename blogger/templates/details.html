@@ -2,6 +2,22 @@
 <!DOCTYPE html>
 <head>
     <h1>Blogger App</h1>
+    <style>
+        p {
+    display: none;
+    margin-left: 20px;
+    }
+
+    h2:hover+p {
+    display: block;
+    }
+
+    .wrapper {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    }
+    </style>
 </head>
 <body>
     {% block content %}
@@ -21,7 +37,7 @@
                 {% endif %}
             
             <ul>
-                <li><h1>{{post.title}}</h1></li><br/>
+                <h1>{{post.title}}</h1><br/>
                 <li><h2>{{post.name}}</h2></li><br/>
                 <li><h4>{{post.post|safe}}</h4></li><br/>
                 <br/>
@@ -34,9 +50,11 @@
                     <form action="{% url 'delete' post.pk %}">
                         <input class="btn btn-warning" type="submit" value="Delete" />
                     </form>
-                <hr>
+                
                 {% else %} 
                 {% endif %}
+                <br/>
+                
                 {% if liked %}
                     <form action="{% url 'add_like' post.id %}" method="POST">
                         {% csrf_token %} 
@@ -50,10 +68,30 @@
                 {% endif %}
 
             </ul>
-            <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}">Back</a></button>
+            <hr>
+            <h3><strong>Comments..</strong></h3>
+            {% if not post.comments.all %}  
+                <p>No Comments...<a href="{% url 'comment' post.id %}">Add New Comment</a></p>
+            {% else %} 
+            <h4><a href="{% url 'comment' post.id %}">Add New Comment</a></h4>
+                {% for comment in post.comments.all %} 
+                  <strong>{{comment.pk}} {{comment.name}}---{{comment.date_added}}</strong> <br/>
+                  <p>{{comment.body}}</p><br/>
+                  <a href="{% url 'c_delete' pk=comment.id bk=post.id %}">Delete</a>
+                  <hr>
+
+                {% endfor %}
+
+            {% endif %}
 
          </div>
+         {% else %}
+         <hr>
+         <h3><strong>Comments..</strong></h3><br/>
+        <p><h3><a href="{% url 'login' %}">Login</a> to add new comment</h3></p>
          {% endif %}
+         
+        
    {% endblock %}
 </body>
 </html>

@@ -3,25 +3,27 @@
 <html>
     <head>
         <h1> Add New Post!</h1>
+        
     </head>
 <body>
     {% block content %} 
     <br/>
     {% if user.is_authenticated %}
-        <div class="container">
+        <div class="wrapper">
+            <h3>Author: {{user.first_name}} {{user.last_name}}</h3>
             <form method="POST">
                 {% csrf_token %}
-                {{form.media}}
                 {{form.as_p}}
                 <button class="btn btn-secondary">Submit</button>
 
         </div>
-        <!---Now writing javascript code to automaticall select user and make select unchangable-->
-        <script>
-            var d_value="{{user.id}}";
-            document.getElementById('name').value=d_value;
-        </script>
+        
     {% endif %}
+    <script>
+        var d_value="{{user.id}}";
+        document.getElementById('id_name').value=d_value;
+    </script>
     {% endblock %}
+    
 </body>
 </html>

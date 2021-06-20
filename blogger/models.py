@@ -30,3 +30,16 @@ class Post(models.Model):
         return self.title+'||'+str(self.name)
     def get_absolute_url(self):
         return reverse('details',args=(str(self.pk)))
+
+class comment(models.Model):
+    post=models.ForeignKey(Post,related_name='comments',on_delete=models.CASCADE)
+    name=models.ForeignKey(User,on_delete=models.CASCADE)
+    #name=models.CharField(max_length=50)
+    body=models.TextField()
+    date_added= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.post.title+" | "+self.name +" | "+ self.body
+    def get_absolute_url(self):
+        return reverse('details',args=(str(self.pk)))
+
