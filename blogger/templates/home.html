@@ -8,20 +8,23 @@
     {% block content %}
     <br/>
     <div class="container">
-        <ul>
+        <ul class="list-group">
             {% for post in object_list %}
-               <a href="{% url 'details' post.pk %}"><h2>{{post.title}}</h2></a><br/>
-               <li><h3>{{post.name}} <a href="{% url 'cat_details' post.category|slugify %}">{{post.category}}</a> {{post.post_date}}</h3></li><br/>
-               <li>{{post.post|safe|slice:":200"}}</li><br/>
+               <li class="list-group-item active"></li><h3><a href="{% url 'details' post.pk %}"></a></h3> <h3>{{post.title}}</h3></a><br/>
+               <li class="list-group-item"><h3>{{post.name}} <a href="{% url 'cat_details' post.category|slugify %}">{{post.category}}</a> {{post.post_date}}</h3></li><br/>
+               <li class="list-group-item">{{post.post|safe|slice:":200"}}</li><br/>
                {% if user.is_authenticated %}
                  {% if user.id == post.name.id %}
+                 <div class="btn-group" role="group" aria-label="Basic example">
                   <form action="{% url 'edit' post.pk %}">
                     <input class="btn btn-success" type="submit" value="Edit" />
                   </form>
                   <br/>
+                  <br/>
                   <form action="{% url 'delete' post.pk %}">
                     <input class="btn btn-warning" type="submit" value="Delete" />
                   </form>
+                  </div>
                   {% else %}
                   {% endif %}
                {% else %}

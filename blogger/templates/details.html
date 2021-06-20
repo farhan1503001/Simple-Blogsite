@@ -36,10 +36,10 @@
                     {% endfor %}
                 {% endif %}
             
-            <ul>
+            <ul class="list-group">
                 <h1>{{post.title}}</h1><br/>
-                <li><h2>{{post.name}}</h2></li><br/>
-                <li><h4>{{post.post|safe}}</h4></li><br/>
+                <li class="list-group-item"><h2>{{post.name}}</h2></li><br/>
+                <li class="list-group-item"><h4>{{post.post|safe}}</h4></li><br/>
                 <br/>
                 {% if user.is_authenticated %}
                   {% if user.id == post.name.id %}
